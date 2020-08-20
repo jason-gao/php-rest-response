@@ -1,8 +1,4 @@
 
-## client options
-- https://www.php.net/manual/en/mongodb-driver-manager.construct.php
-
-
 ## logger
  - implement monolog
  	
@@ -11,5 +7,5 @@
 	- make test
 	
 ## composer
-	- composer require jason-gao/php-mongodb v1.0.0 	
+	- composer require jason-gao/php-rest-response v1.0.0 	
 
