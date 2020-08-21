@@ -148,6 +148,14 @@ class Response {
 	}
 
 
+	public static function isSSOVersion2() {
+		if ( isset( $_REQUEST['sso_version'] ) && $_REQUEST['sso_version'] == 2 ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1 ) {
 		if ( is_null( self::$codeConf ) ) {
 			throw new ResponseException( "please set code conf" );
