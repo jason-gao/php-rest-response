@@ -106,7 +106,7 @@ class Response {
 	}
 
 
-	public static function response( $data, $type = 'json', $isPrettyJson = 0, $exit = 1 ) {
+	public static function response( $data, $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'js' ) {
 		$type = strtolower( $type );
 
 		if ( ! in_array( $type, self::$type ) ) {
@@ -123,10 +123,20 @@ class Response {
 				$exit && exit();
 				break;
 			case 'jsonp':
-				if ( ! headers_sent() ) {
-					header( 'Content-Type:application/json; charset=utf-8' );
+				if ( ! in_array( $jsonpHeader, [ 'js', 'json' ] ) ) {
+					throw new ResponseException( "jsonpHeader just support js and json" );
 				}
-				$handler = strtolower( 'callback' );
+				if ( ! headers_sent() ) {
+					switch ( $jsonpHeader ) {
+						case 'js':
+							header( 'Content-Type: application/javascript; charset=utf-8' );
+							break;
+						case 'json':
+							header( 'Content-Type:application/json; charset=utf-8' );
+							break;
+					}
+				}
+				$handler = isset( $_GET['callback'] ) ? $_GET['callback'] : strtolower( 'callback' );
 				echo( $handler . '(' . self::jsonEncodeHold( $data, $isPrettyJson ) . ');' );
 				$exit && exit();
 				break;
@@ -156,7 +166,7 @@ class Response {
 		return false;
 	}
 
-	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1 ) {
+	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'js' ) {
 		if ( is_null( self::$codeConf ) ) {
 			throw new ResponseException( "please set code conf" );
 		}
@@ -179,7 +189,7 @@ class Response {
 			], '', self::$codeConf[ $code ] ) ), ( $codeParams ? array_values( $codeParams ) : [] ) );
 		}
 
-		self::response( $response, $type, $isPrettyJson, $exit );
+		self::response( $response, $type, $isPrettyJson, $exit, $jsonpHeader );
 	}
 
 
