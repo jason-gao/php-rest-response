@@ -166,7 +166,7 @@ class Response {
 		return false;
 	}
 
-	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'js' ) {
+	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'js', $returnResponse = 0 ) {
 		if ( is_null( self::$codeConf ) ) {
 			throw new ResponseException( "please set code conf" );
 		}
@@ -187,6 +187,10 @@ class Response {
 				'%s',
 				'%d'
 			], '', self::$codeConf[ $code ] ) ), ( $codeParams ? array_values( $codeParams ) : [] ) );
+		}
+
+		if ( $returnResponse ) {
+			return $response;
 		}
 
 		self::response( $response, $type, $isPrettyJson, $exit, $jsonpHeader );
