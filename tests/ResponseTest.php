@@ -16,11 +16,14 @@ class ResponseTest extends TestCase {
 
 		Response::setCodeConf( $conf['code'] );
 //		Response::responseApi( 1, [ 'test' => 1 ], [] );
-		Response::responseApi( 1, [ 'test' => 1 ], [] ,'', 'jsonp');
+//		Response::responseApi( 1, [ 'test' => 1 ], [] ,'', 'jsonp');
 //		Response::responseApi( 1, [ 'test' => 1 ], [] ,'', 'xml');
 //		Response::responseApi(6000000, ['test' => 1], ['1', '2']);
 //		Response::responseApi(6000000, ['test' => 1], ['1', '2'], '111');
 //		Response::responseApi(1, ['test' => 1], [], '', 'xml');
+
+//		var_dump(Response::responseApi(1,['test'=>1],[],'','json',0,0,'js',1));
+//		var_dump(1);
 	}
 
 

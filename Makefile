@@ -10,6 +10,9 @@ env:
 test:
 	./vendor/bin/phpunit
 
+deltag:
+	git push --delete origin v1.0.2
 
-.PHONY: env test
+
+.PHONY: env test deltag
 
