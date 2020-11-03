@@ -137,6 +137,7 @@ class Response {
 					}
 				}
 				$handler = isset( $_GET['callback'] ) ? $_GET['callback'] : strtolower( 'callback' );
+				$handler = htmlspecialchars($handler);
 				echo( $handler . '(' . self::jsonEncodeHold( $data, $isPrettyJson ) . ');' );
 				$exit && exit();
 				break;
@@ -166,7 +167,7 @@ class Response {
 		return false;
 	}
 
-	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'js', $returnResponse = 0 ) {
+	public static function responseApi( $code, $data, $codeParams = [], $message = '', $type = 'json', $isPrettyJson = 0, $exit = 1, $jsonpHeader = 'json', $returnResponse = 0 ) {
 		if ( is_null( self::$codeConf ) ) {
 			throw new ResponseException( "please set code conf" );
 		}
